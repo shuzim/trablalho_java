@@ -245,7 +245,9 @@
                     <p>Expresso suave com leite vaporizado e espuma cremosa</p>
                     <div class="container-price">
                         <p class="price">R$ 8,90</p>
-                        <button class="add-button">+ Adicionar</button>
+                        <form action="adicinar_produto" method="post">
+                            <button class="add-button" name="adicionar_n1">+ Adicionar</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -258,7 +260,9 @@
                     <p>Café espresso, leite vaporizado e chocolate em pó</p>
                     <div class="container-price">
                         <p class="price">R$ 9,90</p>
-                        <button class="add-button">+ Adicionar</button>
+                         <form action="adicinar_produto" method="post">
+                            <button class="add-button" name="adicionar_n2">+ Adicionar</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -270,7 +274,9 @@
                     <p>Café puro e intenso com crema dourada</p>
                     <div class="container-price">
                         <p class="price">R$ 5,90</p>
-                        <button class="add-button">+ Adicionar</button>
+                        <form action="adicinar_produto" method="post">
+                            <button class="add-button" name="adicionar_n3">+ Adicionar</button>
+                        </form>
                     </div>
                 </div>
             </div>
