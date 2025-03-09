@@ -215,7 +215,7 @@
 
     <body>
         <div class="menu">
-            <a href="../cadastrarproduto.jsp">
+            <a href="../products.jsp">
                 <button class="cadastrar"> Cadastrar </button>
                 </a>
 
