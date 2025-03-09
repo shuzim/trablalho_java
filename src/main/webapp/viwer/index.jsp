@@ -1,4 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="java.util.List" %>
+<%@ page import="model.Bdo" %>
+<%@ page import="controller.Consulta" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
     <!DOCTYPE html>
     <html lang="pt-BR">
 
@@ -211,7 +215,7 @@
 
     <body>
         <div class="menu">
-            <a href="cadastrarproduto.jsp">
+            <a href="../cadastrarproduto.jsp">
                 <button class="cadastrar"> Cadastrar </button>
                 </a>
 
@@ -226,6 +230,7 @@
                 <i class="fas fa-shopping-cart"></i>
                 <span class="badge">3</span>
             </div>
+
                 <div class="cart-dropdown" id="cartDropdown">
                         <% String[][] cartItems={ {"Café Latte", "R$ 8,90" }, {"Capulcchio", "R$ 9,90" },
                             {"Espresso", "R$ 5,90" } }; %>
@@ -250,49 +255,33 @@
 
         <h3 class="container-text">Nossos cafés</h3>
         <div class="container">
-            <div class="coffee-item">
-                <img
-                    src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/A_small_cup_of_coffee.JPG/1200px-A_small_cup_of_coffee.JPG" />
-                <div class="container-item">
-                    <h3>Café Latte</h3>
-                    <p>Expresso suave com leite vaporizado e espuma cremosa</p>
-                    <div class="container-price">
-                        <p class="price">R$ 8,90</p>
-                        <form action="adicinar_produto" method="post">
-                            <button class="add-button" name="adicionar_n1">+ Adicionar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
+            <%
+                List<Bdo> produtos = Consulta.getClientes();
+                if (produtos.isEmpty()) {
+            %>
+            <p>Nenhum produto encontrado.</p>
+            <%
+            } else {
+            %>
+
+                <% for (Bdo produto : produtos) { %>
             <div class="coffee-item">
                 <img
-                    src="https://www.nescafe.com/br/sites/default/files/2024-09/NES_SBU_Recipes%202024_Website_French%20Vanilla%20Cappuccino_Hero%20Banner_1066x1066.jpg" />
+                        src="<%= produto.getImg() %>" />
                 <div class="container-item">
-                    <h3>Capulcchio</h3>
-                    <p>Café espresso, leite vaporizado e chocolate em pó</p>
+                    <h3><%= produto.getTitulo() %></h3>
+                    <p><%= produto.getDescricao() %></p>
                     <div class="container-price">
-                        <p class="price">R$ 9,90</p>
-                         <form action="adicinar_produto" method="post">
+                        <p class="price">R$ <%= produto.getPreco() %></p>
+                        <form action="adicinar_produto" method="post">
                             <button class="add-button" name="adicionar_n2">+ Adicionar</button>
                         </form>
                     </div>
                 </div>
             </div>
-
-            <div class="coffee-item">
-                <img src="https://static.itdg.com.br/images/1200-630/0093b901a326651004710993d43fe086/cappuccino.jpg" />
-                <div class="container-item">
-                    <h3>Espresso</h3>
-                    <p>Café puro e intenso com crema dourada</p>
-                    <div class="container-price">
-                        <p class="price">R$ 5,90</p>
-                        <form action="adicinar_produto" method="post">
-                            <button class="add-button" name="adicionar_n3">+ Adicionar</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                <% } %>
+            <% } %>
         </div>
 
         <footer>
