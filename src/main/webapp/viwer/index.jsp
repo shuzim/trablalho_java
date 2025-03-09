@@ -215,7 +215,7 @@
 
     <body>
         <div class="menu">
-            <a href="../products.jsp">
+            <a href="viwer/products.jsp">
                 <button class="cadastrar"> Cadastrar </button>
                 </a>
 

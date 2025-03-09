@@ -1,3 +1,4 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -35,9 +36,10 @@
     </style>
 </head>
 <body>
-<h1>Gerenciamento de Café</h1>
-<h2>Adicionar Novo Item</h2>
-<form onsubmit="alert('Item adicionado!'); return false;">
+
+    <h1>Gerenciamento de Café</h1>
+    <h2>Adicionar Novo Item</h2>
+    <form onsubmit="alert('Item adicionado!'); return false;">
     <label for="title">Título:</label>
     <input type="text" id="title" name="title" required>
 
@@ -46,6 +48,9 @@
 
     <label for="description">Descrição:</label>
     <textarea id="description" name="description" required></textarea>
+
+    <label for="price">Quantidade:</label>
+    <input type="text" id="price" name="price" required>
 
     <label for="price">Preço (R$):</label>
     <input type="text" id="price" name="price" required>
