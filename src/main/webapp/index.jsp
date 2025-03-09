@@ -127,6 +127,13 @@
                 font-weight: bold;
             }
 
+            .cadastrar {
+                grid-column: 2;
+                right: 0;
+                cursor: pointer;
+
+            }
+
             .menu .logo i {
                 margin-right: 8px;
             }
@@ -204,12 +211,18 @@
 
     <body>
         <div class="menu">
+            <a href="cadastrarproduto.jsp">
+                <button class="cadastrar"> Cadastrar </button>
+                </a>
+
             <div class="logo">
                 <i class="fas fa-coffee"></i>
                 Café Express
             </div>
+
             <div class="cart">
-            <div  onclick="toggleCartDropdown()">
+
+                <div  onclick="toggleCartDropdown()">
                 <i class="fas fa-shopping-cart"></i>
                 <span class="badge">3</span>
             </div>

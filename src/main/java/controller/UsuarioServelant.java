@@ -19,7 +19,7 @@ public class UsuarioServelant extends HttpServlet {
 
 
         String nome = request.getParameter("nome");
-        String itenscarrinho = request.getParameter("carinnho");// provalmente n é esse nome
+        String itenscarrinho = request.getParameter("carrinho");// provalmente n é esse nome
 
         Usuario user= new Usuario(nome, itenscarrinho);
 
