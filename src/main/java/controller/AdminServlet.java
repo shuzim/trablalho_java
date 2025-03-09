@@ -11,5 +11,8 @@ import java.io.IOException;
 public class AdminServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getRequestDispatcher("viwer/admin.jsp").forward(request, response);
+
+
+
     }
 }
