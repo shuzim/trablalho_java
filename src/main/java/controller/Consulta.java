@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Consulta {
-    private static final String URL = "jdbc:postgresql://localhost:5432/coffee";  // URL do banco
+    private static final String URL = "jdbc:postgres://localhost:5432/catalogo";  // URL do banco
     private static final String USER = "postgres";    // Usuário do banco
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "iguano";
 
     // Conexão com o banco de dados
     public static List<Bdo> getClientes() {
