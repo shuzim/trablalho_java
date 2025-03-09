@@ -8,16 +8,12 @@ import model.Bdo;
 import model.Usuario;
 
 import java.io.IOException;
-import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 
+public class Carrinho extends HttpServlet {
 
-public class UsuarioServelant extends HttpServlet {
-
-    private static final String PASSWORD = "123";
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
