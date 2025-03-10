@@ -13,29 +13,43 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Descubra o Melhor Café</title>
 <script>
+    function finalizar_pedido() {
+        const valor = localStorage.getItem('carrinho');
+
+        fetch('/trabalho_java/salvarPedido', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ carrinho: valor }) // Envia JSON para o backend
+        })
+        .then(response => response.text())
+        .then(data => console.log('Pedido finalizado:', data))
+        .catch(error => console.error('Erro ao finalizar:', error));
+    }
 
     function adicionarAoCarrinho(nome, descricao, preco, img) {
-        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        let carrinho = JSON.parse(sessionStorage.getItem('carrinho')) || [];
 
         carrinho.push({ nome, descricao, preco, img });
 
-        localStorage.setItem('carrinho', JSON.stringify(carrinho));
+        sessionStorage.setItem('carrinho', JSON.stringify(carrinho));
 
         atualizarCarrinho();
     }
 
     function removerDoCarrinho(index) {
-        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        let carrinho = JSON.parse(sessionStorage.getItem('carrinho')) || [];
 
         if (index >= 0 && index < carrinho.length) {
             carrinho.splice(index, 1);
-            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+            sessionStorage.setItem('carrinho', JSON.stringify(carrinho));
             atualizarCarrinho();
         }
     }
 
     function atualizarCarrinho() {
-        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+        let carrinho = JSON.parse(sessionStorage.getItem('carrinho')) || [];
 
         let cartDropdown = document.getElementById('cartDropdown');
 
@@ -299,6 +313,7 @@
 <div class="menu">
     <a href="add">
         <button class="cadastrar"> Cadastrar</button>
+        <button onclick="finalizar_pedido()">Finalizar</button>
     </a>
 
     <div class="logo">

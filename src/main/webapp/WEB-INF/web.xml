@@ -3,6 +3,15 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" version="3.0">
+  <servlet>
+    <servlet-name>PedidoServlet</servlet-name>
+    <servlet-class>com.seu.pacote.PedidoServlet</servlet-class>
+  </servlet>
+
+  <servlet-mapping>
+    <servlet-name>PedidoServlet</servlet-name>
+    <url-pattern>/salvarPedido</url-pattern>
+  </servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
