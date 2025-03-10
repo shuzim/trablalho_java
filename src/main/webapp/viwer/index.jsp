@@ -12,68 +12,85 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Descubra o Melhor Café</title>
-    <script>
+<script>
 
-        function adicionarAoCarrinho(nome, descricao, preco, img) {
-            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    function adicionarAoCarrinho(nome, descricao, preco, img) {
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-            carrinho.push({ nome, descricao, preco, img });
+        carrinho.push({ nome, descricao, preco, img });
 
+        localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+        atualizarCarrinho();
+    }
+
+    function removerDoCarrinho(index) {
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+        if (index >= 0 && index < carrinho.length) {
+            carrinho.splice(index, 1);
             localStorage.setItem('carrinho', JSON.stringify(carrinho));
-
             atualizarCarrinho();
         }
+    }
 
-        function atualizarCarrinho() {
-            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+    function atualizarCarrinho() {
+        let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
 
-            let cartDropdown = document.getElementById('cartDropdown');
+        let cartDropdown = document.getElementById('cartDropdown');
 
-            cartDropdown.innerHTML = '';
+        cartDropdown.innerHTML = '';
 
-            if (carrinho.length > 0) {
-                carrinho.forEach(item => {
+        if (carrinho.length > 0) {
+            carrinho.forEach((item, index) => {
 
-                    let cartItem = document.createElement('div');
-                    cartItem.className = 'cart-item';
+                let cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
 
-                    let span = document.createElement('span');
+                let span = document.createElement('span');
 
-                    let strong = document.createElement('strong');
-                    strong.innerText = item.nome;
+                let strong = document.createElement('strong');
+                strong.innerText = item.nome;
 
-                    let price = document.createElement('strong');
-                    price.innerText = item.preco;
+                let price = document.createElement('strong');
+                price.innerText = item.preco;
 
-                    let text = document.createTextNode(` - R$ `);
+                let text = document.createTextNode(` - R$ `);
 
-                    span.appendChild(strong);
-                    span.appendChild(text);
-                    span.appendChild(price);
+                span.appendChild(strong);
+                span.appendChild(text);
+                span.appendChild(price);
 
-                    cartItem.appendChild(span);
+                cartItem.appendChild(span);
 
-                    cartDropdown.appendChild(cartItem);
-                });
+                let removeButton = document.createElement('button');
+                removeButton.innerText = 'Remover';
+                removeButton.onclick = function() {
+                    removerDoCarrinho(index);
+                };
+                cartItem.appendChild(removeButton);
 
-                let total = carrinho.reduce((total, item) => {
-                    let precoFormatado = item.preco.replace(',', '.'); // Formata o preço
-                    return total + parseFloat(precoFormatado);
-                }, 0).toFixed(2);
+                cartDropdown.appendChild(cartItem);
+            });
 
-                let finalButton = document.createElement('button');
-                finalButton.className = 'final-button';
-                finalButton.innerText = total;
-                cartDropdown.appendChild(finalButton);
-            } else {
-                cartDropdown.innerHTML = '<p>Nenhum item no carrinho.</p>';
-            }
+            let total = carrinho.reduce((total, item) => {
+                let precoFormatado = item.preco.replace(',', '.');
+                return total + parseFloat(precoFormatado);
+            }, 0).toFixed(2);
+
+            let finalButton = document.createElement('button');
+            finalButton.className = 'final-button';
+            finalButton.innerText = `Total: R$ ${total}`;
+            cartDropdown.appendChild(finalButton);
+        } else {
+            cartDropdown.innerHTML = '<p>Nenhum item no carrinho.</p>';
         }
+    }
 
-        window.onload = function() {
-            atualizarCarrinho();
-        };
-    </script>
+    window.onload = function() {
+        atualizarCarrinho();
+    };
+</script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -297,8 +314,7 @@
         </div>
 
         <div class="cart-dropdown" id="cartDropdown">
-
-            <button class="final-button">Finalizar - R$ 24,70</button>
+            <button class="" onclick="finalizar_pedido()"></button>
         </div>
     </div>
 </div>
