@@ -12,6 +12,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Descubra o Melhor Café</title>
+    <script>
+
+        function adicionarAoCarrinho(nome, descricao, preco, img) {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+            carrinho.push({ nome, descricao, preco, img });
+
+            localStorage.setItem('carrinho', JSON.stringify(carrinho));
+
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            let carrinho = JSON.parse(localStorage.getItem('carrinho')) || [];
+
+            let cartDropdown = document.getElementById('cartDropdown');
+
+            cartDropdown.innerHTML = '';
+
+            if (carrinho.length > 0) {
+                carrinho.forEach(item => {
+
+                    let cartItem = document.createElement('div');
+                    cartItem.className = 'cart-item';
+
+                    let span = document.createElement('span');
+
+                    let strong = document.createElement('strong');
+                    strong.innerText = item.nome;
+
+                    let price = document.createElement('strong');
+                    price.innerText = item.preco;
+
+                    let text = document.createTextNode(` - R$ `);
+
+                    span.appendChild(strong);
+                    span.appendChild(text);
+                    span.appendChild(price);
+
+                    cartItem.appendChild(span);
+
+                    cartDropdown.appendChild(cartItem);
+                });
+
+                let total = carrinho.reduce((total, item) => {
+                    let precoFormatado = item.preco.replace(',', '.'); // Formata o preço
+                    return total + parseFloat(precoFormatado);
+                }, 0).toFixed(2);
+
+                let finalButton = document.createElement('button');
+                finalButton.className = 'final-button';
+                finalButton.innerText = total;
+                cartDropdown.appendChild(finalButton);
+            } else {
+                cartDropdown.innerHTML = '<p>Nenhum item no carrinho.</p>';
+            }
+        }
+
+        window.onload = function() {
+            atualizarCarrinho();
+        };
+    </script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -235,29 +297,7 @@
         </div>
 
         <div class="cart-dropdown" id="cartDropdown">
-            <%
-                Carrinho cart = new Carrinho();
 
-
-                cart.adicionarItem(new Carrinho.Item("Café", "Café arábico", 15.99));
-                cart.adicionarItem(new Carrinho.Item("Chá", "Chá verde", 10.50));
-
-                List<Carrinho.Item> itens = cart.listarItens();
-
-                if (itens != null && !itens.isEmpty()) {
-                    for (Carrinho.Item item : itens) {
-            %>
-            <div class="cart-item">
-                <span><strong><%= item.getNome() %></strong> - <%= item.getDescricao() %> - R$ <%= item.getPreco() %></span>
-            </div>
-            <%
-                }
-            } else {
-            %>
-            <p>Nenhum item no carrinho.</p>
-            <%
-                }
-            %>
             <button class="final-button">Finalizar - R$ 24,70</button>
         </div>
     </div>
@@ -303,40 +343,6 @@
     <p>© 2025 Café Express. Todos os direitos reservados.</p>
 </footer>
 <script>
-    function adicionarAoCarrinho(titulo, descricao, preco, img) {
-        console.log(titulo, descricao, preco, img)
-        fetch('/trabalho_java/adicionarCarrinho', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json', // Certifique-se de que o conteúdo é JSON
-            },
-            body: JSON.stringify({
-                titulo: titulo,
-                descricao: descricao,
-                preco: preco,
-                img: img
-            })
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro na requisição: ' + response.statusText);
-                }
-                return response.json(); // Espera uma resposta JSON
-            })
-            .then(data => {
-                if (data.success) {
-                    alert('Produto adicionado ao carrinho!');
-                } else {
-                    alert('Erro ao adicionar o produto.');
-                }
-            })
-            .catch(error => {
-                console.error('Erro:', error);
-                alert('Erro ao adicionar o produto. Verifique o console para mais detalhes.');
-            });
-    }
-
-
     document.addEventListener("click", function (event) {
         var dropdown = document.getElementById("cartDropdown");
         var cartIcon = document.querySelector(".cart div");
