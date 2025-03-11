@@ -13,20 +13,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>Descubra o Melhor Café</title>
 <script>
-    function finalizar_pedido() {
-        const valor = localStorage.getItem('carrinho');
 
-        fetch('/trabalho_java/salvarPedido', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ carrinho: valor }) // Envia JSON para o backend
-        })
-        .then(response => response.text())
-        .then(data => console.log('Pedido finalizado:', data))
-        .catch(error => console.error('Erro ao finalizar:', error));
-    }
+
+        function submitForm(f){
+            const carrinho = localStorage.getItem('carrinho');
+            try {
+                const carrinhoObj = JSON.parse(carrinho); // Tenta converter em um objeto JSON
+                f.carrinho.value = JSON.stringify(carrinhoObj); // Converte novamente para string e coloca no campo oculto
+            } catch (e) {
+                f.carrinho.value = "Carrinho vazio"; // Se der erro, significa que o carrinho está vazio ou corrompido
+            }
+        }
+
 
     function adicionarAoCarrinho(nome, descricao, preco, img) {
         let carrinho = JSON.parse(sessionStorage.getItem('carrinho')) || [];
@@ -313,8 +311,15 @@
 <div class="menu">
     <a href="add">
         <button class="cadastrar"> Cadastrar</button>
-        <button onclick="finalizar_pedido()">Finalizar</button>
     </a>
+
+    <form action="/trabalho_javaa/salvarPedido" method="post" onSubmit="submitForm(this.form)">
+        <!-- Campo oculto para armazenar o carrinho -->
+        <input type="hidden" name="carrinho" id="carrinho"/>
+
+        <!-- Botão para submeter o formulário -->
+        <input type="submit" value="Finalizar Pedido" class="submit" />
+    </form>
 
     <div class="logo">
         <i class="fas fa-coffee"></i>

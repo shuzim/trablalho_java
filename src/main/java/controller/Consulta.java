@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Consulta {
-    private static final String URL = "jdbc:postgresql://192.168.20.21:5432/coffee";
+    private static final String URL = "jdbc:postgresql://localhost:5432/coffee";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "root";
+    private static final String PASSWORD = "123";
 
     public static List<Bdo> getClientes() {
         List<Bdo> clientes = new ArrayList<>();
