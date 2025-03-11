@@ -58,8 +58,8 @@ public class PedidoServlet extends HttpServlet {
         boolean sucesso = Consulta.inserirPedido(pedido);
 
         if (sucesso) {
-            response.setStatus(HttpServletResponse.SC_OK);
-            response.getWriter().write("Pedido salvo com sucesso!");
+            // Redireciona para a rota /pedidos em caso de sucesso
+            response.sendRedirect("/trabalho_java/pedidos");
         } else {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             response.getWriter().write("Erro ao salvar pedido.");

@@ -124,45 +124,7 @@ public class Consulta {
             return false;
         }
     }
-    public static List<PedidoItem> getItensPedido() {
-        List<PedidoItem> itens = new ArrayList<>();
 
-        try {
-            Class.forName("org.postgresql.Driver");
-        } catch (ClassNotFoundException e) {
-            System.out.println("Driver do PostgreSQL não encontrado: " + e.getMessage());
-            return itens;
-        }
-
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
-
-            String sql = "SELECT pi.produto_nome, pi.descricao, pi.preco, pi.quantidade, pi.img_url " +
-                    "FROM pedidos_itens pi " +
-                    "INNER JOIN pedidos p ON pi.pedido_id = p.id";
-
-
-            try (Statement stmt = connection.createStatement();
-                 ResultSet rs = stmt.executeQuery(sql)) {
-
-
-                while (rs.next()) {
-                    PedidoItem item = new PedidoItem();
-                    item.setProdutoNome(rs.getString("produto_nome"));
-                    item.setDescricao(rs.getString("descricao"));
-                    item.setPreco(rs.getBigDecimal("preco"));
-                    item.setQuantidade(rs.getInt("quantidade"));
-                    item.setImgUrl(rs.getString("img_url"));
-
-                    itens.add(item);
-                }
-            }
-
-        } catch (SQLException e) {
-            System.out.println("Erro de conexão com o banco de dados: " + e.getMessage());
-        }
-
-        return itens;
-    }
 
 
     public static List<Pedido> getTodosPedidos() {

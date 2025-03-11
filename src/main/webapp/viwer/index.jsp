@@ -15,16 +15,16 @@
 <script>
 
 
-        function submitForm(f){
-            const carrinho = sessionStorage.getItem('carrinho');
-            sessionStorage.removeItem('carrinho')
-            try {
-                const carrinhoObj = JSON.parse(carrinho);
-                f.carrinho.value = JSON.stringify(carrinhoObj);
-            } catch (e) {
-                f.carrinho.value = "Carrinho vazio";
-            }
+    function submitForm(f){
+        const carrinho = sessionStorage.getItem('carrinho');
+        sessionStorage.removeItem('carrinho')
+        try {
+            const carrinhoObj = JSON.parse(carrinho);
+            f.carrinho.value = JSON.stringify(carrinhoObj);
+        } catch (e) {
+            f.carrinho.value = "Carrinho vazio";
         }
+    }
 
 
     function adicionarAoCarrinho(nome, descricao, preco, img) {
@@ -294,7 +294,7 @@
             background: white;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             border-radius: 5px;
-            width: 250px;
+            width: 350px;
             padding: 10px;
             z-index: 1000;
         }
