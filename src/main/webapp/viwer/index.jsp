@@ -16,23 +16,24 @@
 
 
         function submitForm(f){
-            const carrinho = localStorage.getItem('carrinho');
+            const carrinho = sessionStorage.getItem('carrinho');
+            sessionStorage.removeItem('carrinho')
             try {
-                const carrinhoObj = JSON.parse(carrinho); // Tenta converter em um objeto JSON
-                f.carrinho.value = JSON.stringify(carrinhoObj); // Converte novamente para string e coloca no campo oculto
+                const carrinhoObj = JSON.parse(carrinho);
+                f.carrinho.value = JSON.stringify(carrinhoObj);
             } catch (e) {
-                f.carrinho.value = "Carrinho vazio"; // Se der erro, significa que o carrinho está vazio ou corrompido
+                f.carrinho.value = "Carrinho vazio";
             }
         }
 
 
     function adicionarAoCarrinho(nome, descricao, preco, img) {
         let carrinho = JSON.parse(sessionStorage.getItem('carrinho')) || [];
-
         carrinho.push({ nome, descricao, preco, img });
 
         sessionStorage.setItem('carrinho', JSON.stringify(carrinho));
 
+        atualizarBadgeCarrinho();
         atualizarCarrinho();
     }
 
@@ -42,6 +43,7 @@
         if (index >= 0 && index < carrinho.length) {
             carrinho.splice(index, 1);
             sessionStorage.setItem('carrinho', JSON.stringify(carrinho));
+            atualizarBadgeCarrinho();
             atualizarCarrinho();
         }
     }
@@ -85,22 +87,25 @@
                 cartDropdown.appendChild(cartItem);
             });
 
-            let total = carrinho.reduce((total, item) => {
-                let precoFormatado = item.preco.replace(',', '.');
-                return total + parseFloat(precoFormatado);
-            }, 0).toFixed(2);
-
-            let finalButton = document.createElement('button');
-            finalButton.className = 'final-button';
-            finalButton.innerText = `Total: R$ ${total}`;
-            cartDropdown.appendChild(finalButton);
         } else {
             cartDropdown.innerHTML = '<p>Nenhum item no carrinho.</p>';
+        }
+    }
+    function atualizarBadgeCarrinho() {
+        let carrinho = JSON.parse(sessionStorage.getItem('carrinho')) || [];
+        let badge = document.querySelector('.menu .cart .badge');
+
+        if (carrinho.length >= 0) {
+            badge.style.display = 'flex';
+            badge.innerText = carrinho.length;
+        } else {
+            badge.style.display = 'none';
         }
     }
 
     window.onload = function() {
         atualizarCarrinho();
+        atualizarBadgeCarrinho();
     };
 </script>
     <style>
@@ -304,33 +309,81 @@
         .cart-item:last-child {
             border-bottom: none;
         }
+
+        .button-container {
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .button-container a {
+            text-decoration: none;
+        }
+
+        .button-container button,
+        .button-container input[type="submit"] {
+            padding: 8px 16px;
+            font-size: 14px;
+            color: #fff;
+            background-color: #8B4513;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+
+        .button-container button:hover,
+        .button-container input[type="submit"]:hover {
+            background-color: #A0522D;
+            transform: translateY(-1px);
+        }
+
+        .submit {
+            background-color: #D2691E;
+        }
+
+        .submit:hover {
+            background-color: #CD853F;
+        }
+        .cart button {
+            padding: 4px ;
+            font-size: 14px;
+            color: #fff;
+            background-color: #8B4513;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
     </style>
 </head>
 
 <body>
 <div class="menu">
-    <a href="add">
-        <button class="cadastrar"> Cadastrar</button>
-    </a>
-
-    <form action="/trabalho_javaa/salvarPedido" method="post" onSubmit="submitForm(this.form)">
-        <!-- Campo oculto para armazenar o carrinho -->
-        <input type="hidden" name="carrinho" id="carrinho"/>
-
-        <!-- Botão para submeter o formulário -->
-        <input type="submit" value="Finalizar Pedido" class="submit" />
-    </form>
-
+    <div class="button-container">
     <div class="logo">
         <i class="fas fa-coffee"></i>
         Café Express
     </div>
+        <a href="add">
+            <button class="cadastrar">Cadastrar</button>
+        </a>
+        <a href="pedidos">
+            <button class="cadastrar">Pedidos</button>
+        </a>
+        <form action="/trabalho_java/salvarPedido" method="post" onsubmit="submitForm(this)">
+            <input type="hidden" name="carrinho" id="carrinho"/>
+            <input type="submit" value="Finalizar Pedido" class="submit" />
+        </form>
+    </div>
+
 
     <div class="cart">
 
         <div onclick="toggleCartDropdown()">
             <i class="fas fa-shopping-cart"></i>
-            <span class="badge">3</span>
+            <span class="badge"></span>
         </div>
 
         <div class="cart-dropdown" id="cartDropdown">
