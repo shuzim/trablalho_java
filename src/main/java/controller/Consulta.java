@@ -9,9 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Consulta {
-    private static final String URL = "jdbc:postgresql://192.168.20.21:5432/coffee";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "root";
+    private static final String URL = "jdbc:postgresql://pg-206e7f6f-marcost-138d.h.aivencloud.com:11596/defaultdb";
+    private static final String USER = "avnadmin";
+    private static final String PASSWORD = "AVNS_AF47f3MnbYH9nz6Beev";
+
 
     public static List<Bdo> getClientes() {
         List<Bdo> clientes = new ArrayList<>();
