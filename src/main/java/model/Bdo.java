@@ -1,6 +1,7 @@
 package model;
 
 public class Bdo {
+    private int id;
     private String titulo;
     private String descricao;
     private String preco;
@@ -47,5 +48,13 @@ public class Bdo {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
