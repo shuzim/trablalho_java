@@ -9,7 +9,7 @@ import java.io.IOException;
 public class LoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("viwer/login.jsp");
+        request.getRequestDispatcher("viwer/login.jsp").forward(request, response);;
 
 
     }
