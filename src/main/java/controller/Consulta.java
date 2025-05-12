@@ -3,9 +3,11 @@ package controller;
 import model.Bdo;
 import model.Pedido;
 import model.PedidoItem;
+import model.Usuario;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Consulta {
@@ -194,6 +196,38 @@ public class Consulta {
         }
 
         return itens;
+    }
+
+    //parte do usuario e admin
+
+    public static Usuario getUser(String username) {
+        Usuario user = null;
+
+        try {
+            Class.forName("org.postgresql.Driver"); // carrega o driver JDBC
+            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+
+            String sql = "SELECT * FROM usuarios WHERE usuario = ?";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, username);
+
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                user = new Usuario();
+                user.setUsername(rs.getString("usuario"));
+                user.setPassword(rs.getString("senha"));
+                user.setRole(rs.getString("role"));
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace(); // Para depuração
+        }
+
+        return user;
     }
 
 }
