@@ -11,9 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Consulta {
-    private static final String URL = "jdbc:postgresql://pg-206e7f6f-marcost-138d.h.aivencloud.com:11596/defaultdb";
-    private static final String USER = "avnadmin";
-    private static final String PASSWORD = "AVNS_AF47f3MnbYH9nz6Beev";
+    private static final String URL = "jdbc:postgresql://192.168.20.21:5432/coffee";
+    private static final String USER = "postgres";
+    private static final String PASSWORD = "root";
 
 
     public static List<Bdo> getClientes() {
@@ -207,7 +207,7 @@ public class Consulta {
             Class.forName("org.postgresql.Driver"); // carrega o driver JDBC
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
-            String sql = "SELECT * FROM user WHERE user = ?";
+            String sql = "SELECT * FROM usuarios WHERE usuario = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
 
