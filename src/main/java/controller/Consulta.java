@@ -207,7 +207,7 @@ public class Consulta {
             Class.forName("org.postgresql.Driver"); // carrega o driver JDBC
             Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
 
-            String sql = "SELECT * FROM usuarios WHERE usuario = ?";
+            String sql = "SELECT * FROM user WHERE user = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, username);
 
@@ -224,9 +224,9 @@ public class Consulta {
             stmt.close();
             conn.close();
         } catch (Exception e) {
+            System.err.println("Erro ao consultar usuário no banco:");
             e.printStackTrace(); // Para depuração
         }
-
         return user;
     }
 

@@ -27,10 +27,10 @@ public class HomeController extends HttpServlet {
         if (user != null && user.getPassword().equals(password)) {
             HttpSession session = req.getSession();
             session.setAttribute("user", user);
-            resp.sendRedirect("dashboard.jsp");
+            resp.sendRedirect("viwer/index.jsp");
         } else {
             req.setAttribute("error", "Usuário ou senha inválidos");
-            req.getRequestDispatcher("login.jsp").forward(req, resp);
+            req.getRequestDispatcher("viwer/login.jsp").forward(req, resp);
         }
     }
 }
