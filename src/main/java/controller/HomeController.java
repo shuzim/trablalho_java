@@ -11,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Usuario;
-import org.springframework.security.core.userdetails.User;
 
 import java.io.IOException;
 

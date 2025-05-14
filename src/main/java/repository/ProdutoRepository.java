@@ -7,6 +7,6 @@ import java.util.List;
 public class ProdutoRepository {
 
     public List<Bdo> listarTodos() {
-        return Consulta.getClientes(); // Usando seu método existente
+        return Consulta.getClientes();
     }
 }

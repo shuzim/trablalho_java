@@ -7,7 +7,7 @@
 <body>
     <div class="container">
     <h2>Login</h2>
-    <form method="post" action="login"> <!-- Rota do LoginServlet -->
+<form action="${pageContext.request.contextPath}/login" method="post">
         <input type="text" name="username" placeholder="Usuário" required />
         <br><br>
         <input type="password" name="password" placeholder="Senha" required />

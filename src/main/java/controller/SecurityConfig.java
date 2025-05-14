@@ -7,7 +7,7 @@ import model.Usuario;
 
 import java.io.IOException;
 
-@WebFilter("*.jsp")
+@WebFilter("/*")
 public class SecurityConfig implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -15,23 +15,35 @@ public class SecurityConfig implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
         HttpSession session = req.getSession(false);
-        String path = req.getRequestURI();
 
-        if (path.contains("login.jsp") || path.contains("login")) {
+        String uri = req.getRequestURI();
+        String contextPath = req.getContextPath();
+        String resourcePath = uri.substring(contextPath.length());
+
+        // Libera URLs públicas
+        if (resourcePath.equals("/login") ||
+                resourcePath.equals("/viwer/login.jsp") ||
+                resourcePath.startsWith("/resources/")) {
             chain.doFilter(request, response);
             return;
         }
 
+        // Bloqueia se não estiver logado
         if (session == null || session.getAttribute("user") == null) {
-            resp.sendRedirect("login.jsp");
+            resp.sendRedirect(req.getContextPath() + "/viwer/login.jsp");
             return;
         }
 
+        // Verifica a role do usuário
         Usuario user = (Usuario) session.getAttribute("user");
-        if (path.contains("admin.jsp") && !"admin".equals(user.getRole())) {
-            resp.sendRedirect("error.jsp");
+
+        // Protege /add e /pedidos para apenas admin
+        if ((resourcePath.equals("/add") || resourcePath.equals("/pedidos")) &&
+                !"admin".equals(user.getRole())) {
+            resp.sendRedirect(req.getContextPath() + "/viwer/index.jsp");
             return;
         }
+
 
         chain.doFilter(request, response);
     }

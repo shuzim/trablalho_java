@@ -366,15 +366,18 @@
         <i class="fas fa-coffee"></i>
         Café Express
     </div>
-        <a href="add">
+        <a href="/trabalho_java/add">
             <button class="cadastrar">Cadastrar</button>
         </a>
-        <a href="pedidos">
+        <a href="/trabalho_java/pedidos">
             <button class="cadastrar">Pedidos</button>
         </a>
         <form action="/trabalho_java/salvarPedido" method="post" onsubmit="submitForm(this)">
             <input type="hidden" name="carrinho" id="carrinho"/>
             <input type="submit" value="Finalizar Pedido" class="submit" />
+        </form>
+        <form method="get" action="${pageContext.request.contextPath}/logout" style="display: inline;">
+             <button type="submit" class="cadastrar">Sair</button>
         </form>
     </div>
 
